@@ -1,55 +1,225 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Drupallearningroadmap : ">
+    <title>Drupallearningroadmap by jlmwebhosting</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <title>Drupallearningroadmap</title>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/jlmwebhosting/DrupalLearningRoadMap">View on GitHub</a>
-
-          <h1 id="project_title">Drupallearningroadmap</h1>
-          <h2 id="project_tagline"></h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/jlmwebhosting/DrupalLearningRoadMap/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/jlmwebhosting/DrupalLearningRoadMap/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+    <div class="wrapper">
+      <header class="without-description">
+        <h1>Drupallearningroadmap</h1>
+        <p></p>
+        <p class="view"><a href="https://github.com/jlmwebhosting/DrupalLearningRoadMap">View the Project on GitHub <small>jlmwebhosting/DrupalLearningRoadMap</small></a></p>
+        <ul>
+          <li><a href="https://github.com/jlmwebhosting/DrupalLearningRoadMap/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jlmwebhosting/DrupalLearningRoadMap/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jlmwebhosting/DrupalLearningRoadMap">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
         <p>Welcome to Drupal Learning Road Map</p>
+
+<p>event_registration.inc</p>
 
 <p>&lt;?php</p>
 
 <p>include_once(drupal_get_path('module', 'webform') ."/includes/webform.submissions.inc");</p>
 
+<p>function event_registration_review_form($form,&amp;$form_state)
+{</p>
+
+<pre><code>$nid = 5;
+$node = node_load($nid);
+
+$form['er_review_form']['pi'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;h3&gt;PERSONAL INFORMATION&lt;/h3&gt;',
+);
+
+$form['er_review_form']['member_number'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Member number'),
+    '#default_value' =&gt; $node-&gt;field_member_number['und'][0]['value'],
+    '#element_validate' =&gt; array('event_review_mnum_validate'),
+    '#size' =&gt; 60,
+    '#maxlength' =&gt; 128,
+    '#required' =&gt; TRUE,
+);
+
+$form['er_review_form']['field_first_name'] = array(
+        '#type' =&gt; 'textfield', 
+        '#title' =&gt; t('First Name'), 
+        '#size' =&gt; 60, 
+        '#maxlength' =&gt; 128,
+        '#required' =&gt; TRUE,
+        '#default_value' =&gt; $node-&gt;field_first_name['und'][0]['value'],
+);
+
+$form['er_review_form']['middle_name'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Middle Name'),
+    '#default_value' =&gt; $node-&gt;field_middle_name['und'][0]['value'],
+    '#size' =&gt; 60,
+    '#maxlength' =&gt; 128,
+);
+
+$form['er_review_form']['last_name'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Last Name'),
+    '#default_value' =&gt; $node-&gt;field_last_name['und'][0]['value'],
+    '#size' =&gt; 60,
+    '#maxlength' =&gt; 128,
+    '#required' =&gt; TRUE,
+);
+
+$form['er_review_form']['date_of_birth'] = array(
+    '#type' =&gt; 'date',
+    '#title' =&gt; t('Date of birth'),
+    '#default_value' =&gt; $node-&gt;field_date_of_birth['und'][0]['value'],
+    '#element_validate' =&gt; array('event_review_dob_validate'),
+    '#required' =&gt; TRUE,
+);
+
+$form['er_review_form']['date_of_event'] = array(
+    '#type' =&gt; 'date',
+    '#title' =&gt; t('Date of event'),
+    '#default_value' =&gt; $node-&gt;field_date_of_event['und'][0]['value'],
+    '#required' =&gt; TRUE,
+);
+
+$form['er_review_form']['contact_number'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Contact number'),
+    '#default_value' =&gt; $node-&gt;field_contact_number['und'][0]['value'],
+    '#element_validate' =&gt; array('event_review_cnum_validate'),
+    '#size' =&gt; 60,
+    '#maxlength' =&gt; 128,
+    '#required' =&gt; TRUE,
+);
+
+$form['er_review_form']['email'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Email address'),
+    '#default_value' =&gt; $node-&gt;field_email_address['und'][0]['value'],
+    '#element_validate' =&gt; array('event_review_email_validate'),
+);  
+
+$form['er_review_form']['attending_with_partner'] = array(
+    '#type' =&gt; 'checkbox',
+    '#title' =&gt; t('Attending with a partner'),
+    '#default_value' =&gt; $node-&gt;field_attend_with_a_partner['und'][0]['value'],
+);
+
+$form['er_review_form']['next'] = array(
+    '#type' =&gt; 'submit',
+    '#value' =&gt; t('Next'),
+    '#submit' =&gt; array('event_review_submit'),
+);
+
+return $form;
+</code></pre>
+
+<p>}</p>
+
+<p>function event_review_mnum_validate($form, &amp;$form_state)
+{
+    if(!ctype_digit($form_state['values']['member_number']))
+    {
+        form_set_error('Member number','Only numbers is allowed');
+    }
+}</p>
+
+<p>function event_review_email_validate($form, &amp;$form_state)
+{
+    if(!valid_email_address($form_state['values']['email']))
+    {
+        form_set_error('Email address','Not a valid email address');
+    }
+}</p>
+
+<p>function event_review_cnum_validate($form, &amp;$form_state)
+{
+    if(!is_numeric($form_state['values']['contact_number']))
+    {
+        form_set_error('Contact number','Contact number is not in correct format');
+    }
+}</p>
+
+<p>function event_review_dob_validate($form, &amp;$form_state)
+{
+    $dob = $form_state['values']['date_of_birth'];
+    $dob_year = $dob['year'];
+    $current_yr = date('Y');</p>
+
+<pre><code>if($dob &amp;&amp; ($dob_year &lt; 1900 || $dob_year &gt; 2015))
+{
+    form_set_error('Date of birth','Enter a year between 1900 and current year');
+}
+</code></pre>
+
+<p>}</p>
+
+<p>function event_review_submit($form, $form_state)
+{
+    //print_r($form_state['values']);
+    //die();</p>
+
+<pre><code>$body_text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
+
+$dob = date_create($form_state['values']['date_of_birth']['month'] . '-' . $form_state['values']['date_of_birth']['day'] . '-' .$form_state['values']['date_of_birth']['year']);
+
+$dob_data = date_format($dob, 'Y-m-d H:i');
+
+$doe = date_create($form_state['values']['date_of_event']['month'] . '-' . $form_state['values']['date_of_event']['day'] . '-' .$form_state['values']['date_of_event']['year']);
+
+$doe_data = date_format($doe, 'Y-m-d H:i');
+
+$node = new stdClass();
+$node-&gt;type = 'event';
+node_object_prepare($node);
+$node-&gt;language = LANGUAGE_NONE;
+$node-&gt;status = 1;
+$node-&gt;uid = 1;
+$node-&gt;title = $form_state['values']['member_number'];
+$node-&gt;body['und'][0]['value'] = $body_text;
+$node-&gt;body['und'][0]['summary'] = '';
+$node-&gt;body['und'][0]['format'] = 'filtered_html';
+$node-&gt;body['und'][0]['safe_value'] = 'Lorem Ipsum Dolor';
+$node-&gt;field_member_number['und'][0]['value'] = $form_state['values']['member_number'];
+$node-&gt;field_first_name['und'][0]['value'] = $form_state['values']['field_first_name'];
+$node-&gt;field_middle_name['und'][0]['value'] = $form_state['values']['middle_name'];
+$node-&gt;field_last_name['und'][0]['value'] = $form_state['values']['last_name'];
+$node-&gt;field_date_of_birth['und'][0]['value'] = $dob_data;
+$node-&gt;field_date_of_event['und'][0]['value'] = $doe_data;
+$node-&gt;field_contact_number['und'][0]['value'] = $form_state['values']['contact_number'];
+$node-&gt;field_email_address['und'][0]['value'] = $form_state['values']['email'];
+$node-&gt;field_attend_with_a_partner['und'][0]['value'] = $form_state['values']['attending_with_partner'];
+$node = node_submit($node);
+node_save($node);
+
+drupal_set_message("Event activated");
+</code></pre>
+
+<p>}</p>
+
 <p>?&gt;</p>
       </section>
     </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Drupallearningroadmap maintained by <a href="https://github.com/jlmwebhosting">jlmwebhosting</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
+    <footer>
+      <p>Project maintained by <a href="https://github.com/jlmwebhosting">jlmwebhosting</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
