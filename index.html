@@ -33,6 +33,415 @@
       <section id="main_content" class="inner">
         <p>Welcome to Drupal Learning Road Map</p>
 
+<p>event_registration.module</p>
+
+<p>&lt;?php</p>
+
+<p>function event_registration_menu()
+{
+    $items = array();</p>
+
+<pre><code>$items['event/register'] = array(
+    'title' =&gt; t('AVA Event Registration'),
+    'page callback' =&gt; 'drupal_get_form',
+    'page arguments' =&gt; array('event_registration_form'),
+    'access callback' =&gt; TRUE,
+    'access arguments' =&gt; array('administer event_registration module configuration'),
+    'type' =&gt; MENU_NORMAL_ITEM,
+);
+
+$items['event/review'] = array(
+    'title' =&gt; t('AVA Event Registration'),
+    'page callback' =&gt; 'drupal_get_form',
+    'page arguments' =&gt; array('event_registration_review_form'),
+    'access callback' =&gt; TRUE,
+    'access arguments' =&gt; array('administer event_registration module configuration'),
+    'type' =&gt; MENU_NORMAL_ITEM,
+    'file' =&gt; 'event_registration.inc',
+);
+
+$items['event/ajaxregister'] = array(
+    'title' =&gt; t('AJAX AVA Event Registration'),
+    'page callback' =&gt; 'drupal_get_form',
+    'page arguments' =&gt; array('ajax_event_registration_form'),
+    'access callback' =&gt; TRUE,
+    'access arguments' =&gt; array('administer event_registration module configuration'),
+    //'type' =&gt; MENU_NORMAL_ITEM,
+);
+
+return $items;
+</code></pre>
+
+<p>}</p>
+
+<p>function event_registration_form($form, &amp;$form_state)
+{
+    if (!empty($form_state['page_num']) &amp;&amp; $form_state['page_num'] == 2) 
+    {
+        return event_registration_form_page_two($form, $form_state);
+    }</p>
+
+<pre><code>$form_state['page_num'] = 1;
+
+drupal_set_title('AVA Event Registration Form');
+
+$form['erf_header_desc'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;h3&gt;Please fill the following details. Fields with * are required to be filled in.&lt;/h3&gt;', 
+);
+
+$form['erf_event_header_title'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;h2&gt;CANINE FESTIVAL&lt;/h2&gt;',    
+);
+
+$form['erf_event_header_title'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500 when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;',    
+);
+
+$form['erf_event_date_available'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;h2&gt;Date Available: FEBRUARY 20,2015&lt;/h2&gt;',   
+);
+
+$form['er_form'] = array(
+    '#type' =&gt; 'fieldset',
+    '#collapsible' =&gt; FALSE,
+);
+
+$form['er_form']['pi'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;h3&gt;PERSONAL INFORMATION&lt;/h3&gt;',
+);
+
+$form['er_form']['member_number'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Member number'),
+    '#size' =&gt; 60,
+    '#element_validate' =&gt; array('event_registration_mnum_validate'),
+    '#maxlength' =&gt; 128,
+    '#required' =&gt; TRUE,
+);
+
+$form['er_form']['first_name'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('First Name'),
+    '#size' =&gt; 60,
+    '#maxlength' =&gt; 128,
+    '#required' =&gt; TRUE,
+);
+
+$form['er_form']['middle_name'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Middle Name'),
+    '#size' =&gt; 60,
+    '#maxlength' =&gt; 128,
+);
+
+$form['er_form']['last_name'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Last Name'),
+    '#size' =&gt; 60,
+    '#maxlength' =&gt; 128,
+    '#required' =&gt; TRUE,
+);
+
+$form['er_form']['date_of_birth'] = array(
+    '#type' =&gt; 'date',
+    '#title' =&gt; t('Date of birth'),
+    '#element_validate' =&gt; array('event_registration_dob_validate'),
+    '#required' =&gt; TRUE,
+);
+
+$form['er_form']['date_of_event'] = array(
+    '#type' =&gt; 'date',
+    '#title' =&gt; t('Date of event'),
+    '#required' =&gt; TRUE,
+);
+
+$form['er_form']['contact_number'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Contact number'),
+    '#size' =&gt; 60,
+    '#element_validate' =&gt; array('event_registration_cnum_validate'),
+    '#maxlength' =&gt; 128,
+    '#required' =&gt; TRUE,
+);
+
+$form['er_form']['email'] = array(
+    '#type' =&gt; 'textfield',
+    '#title' =&gt; t('Email address'),
+    '#element_validate' =&gt; array('event_registration_email_validate'),
+);      
+
+$form['er_form']['attending_with_partner'] = array(
+    '#type' =&gt; 'checkbox',
+    '#title' =&gt; t('Attending with a partner'),
+);
+
+$form['er_form']['next'] = array(
+    '#type' =&gt; 'submit',
+    '#value' =&gt; t('Next'),
+);
+
+return $form;
+</code></pre>
+
+<p>}</p>
+
+<p>function event_registration_mnum_validate($form, &amp;$form_state)
+{
+    if(!ctype_digit($form_state['values']['member_number']))
+    {
+        form_set_error('Member number','Only numbers is allowed');
+    }
+}</p>
+
+<p>function event_registration_email_validate($form, &amp;$form_state)
+{
+    if(!valid_email_address($form_state['values']['email']))
+    {
+        form_set_error('Email address','Not a valid email address');
+    }
+}</p>
+
+<p>function event_registration_cnum_validate($form, &amp;$form_state)
+{
+    if(!is_numeric($form_state['values']['contact_number']))
+    {
+        form_set_error('Contact number','Contact number is not in correct format');
+    }
+}</p>
+
+<p>function event_registration_dob_validate($form, &amp;$form_state)
+{
+    $dob = $form_state['values']['date_of_birth'];
+    $dob_year = $dob['year'];
+    $current_yr = date('Y');</p>
+
+<pre><code>if($dob &amp;&amp; ($dob_year &lt; 1900 || $dob_year &gt; 2015))
+{
+    form_set_error('Date of birth','Enter a year between 1900 and current year');
+}
+</code></pre>
+
+<p>}</p>
+
+<p>function event_registration_form_page_two($form, $form_state)
+{
+    drupal_set_title('AVA Event Registration Form - Step 2');</p>
+
+<pre><code>if($form_state['values']['attending_with_partner']==1)
+{
+    $attend_with_partner = 'YES';
+    // print_r($attend_with_partner);
+    // die();
+}
+else
+{
+    $attend_with_partner = 'NO';
+    /* print_r($attend_with_partner);
+    die(); */
+}
+
+$form['er_form2'] = array(
+    '#type' =&gt; 'fieldset',
+    '#collapsible' =&gt; FALSE,
+);
+
+$form['er_form2']['confirmation_header'] = array(
+    '#type' =&gt; 'item',
+    '#title' =&gt; t('Confirmation and Pricing'),
+);
+
+$form['er_form2']['name'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="name"&gt;Name: &lt;strong&gt;' . $form_state['values']['first_name'] . ' ' . $form_state['values']['middle_name'] . ' ' . $form_state['values']['last_name'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['member'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="member"&gt;Member: &lt;strong&gt;' . $form_state['values']['member_number'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['event'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="event"&gt;Event: &lt;strong&gt;' . $form_state['values']['event'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['with_partner'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="with_partner"&gt;With partner: &lt;strong&gt;' . $attend_with_partner . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['date_of_event'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="date_of_event"&gt;Date of event: &lt;strong&gt;' . $form_state['values']['date_of_event'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['contact_number'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="contact_number"&gt;Contact number: &lt;strong&gt;' . $form_state['values']['contact_number'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['email'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="email"&gt;Email: &lt;strong&gt;' . $form_state['values']['email'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['divider'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="divider" style="border-bottom:1px solid #000;"&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['ost'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="ost"&gt;OST: &lt;strong&gt;' . $form_state['values']['ost'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['pricing'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="pricing"&gt;Pricing: &lt;strong&gt;' . $form_state['values']['pricing'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['total'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="total"&gt;Total: &lt;strong&gt;' . $form_state['values']['total'] . '&lt;/strong&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['divider2'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="divider2" style="border-bottom:1px solid #000;"&gt;&lt;/div&gt;',
+);
+
+$form['er_form2']['note'] = array(
+    '#type' =&gt; 'item',
+    '#markup' =&gt; '&lt;div id="note"&gt;Note:
+    &lt;br&gt;
+    Pricing varies from Members,Non-members with partners and without partners of Australia Veterinary Association joining the event
+    &lt;/div&gt;',
+);
+
+$form['er_form2']['submit'] = array(
+    '#type' =&gt; 'submit',
+    '#value' =&gt; t('Submit'),
+    '#submit' =&gt; array('event_registration_form_page_two_submit'),
+);
+
+$form['er_form2']['back'] = array(
+    '#type' =&gt; 'submit',
+    '#value' =&gt; t('Back'),
+    '#submit' =&gt; array('event_registration_form_page_two_back'),
+);
+
+return $form;
+</code></pre>
+
+<p>}</p>
+
+<p>function event_registration_form_submit($form, &amp;$form_state)
+{
+    $form_state['page_values'][1] = $form_state['values'];
+    $form_state['values']['event'] = 'Sample Event';
+    $form_state['values']['date_of_event'] = '02/27/2015';
+    $form_state['values']['ost'] = 90.35;
+    $form_state['values']['pricing'] = 200;
+    $form_state['values']['total'] = $form_state['values']['ost'] + $form_state['values']['pricing'];</p>
+
+<pre><code>if(!empty($form_state['page_values'][1]))
+{
+    $form_state['page_num'] = 2;
+    $form_state['rebuild'] = TRUE;
+}
+</code></pre>
+
+<p>}</p>
+
+<p>function event_registration_form_page_two_submit($form, &amp;$form_state)
+{</p>
+
+<pre><code>$doe = date_create($form_state['page_values'][1]['date_of_event']['month'] . '-' . $form_state['page_values'][1]['date_of_event']['day'] . '-' .$form_state['page_values'][1]['date_of_event']['year']);
+
+$doe_data = date_format($doe, 'Y-m-d H:i');
+//print_r($doe_data);
+//die();
+
+$body_text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
+
+$node = new stdClass();
+$node-&gt;type = 'event';
+node_object_prepare($node);
+$node-&gt;language = LANGUAGE_NONE;
+$node-&gt;status = 1;
+$node-&gt;uid = 1;
+$node-&gt;title = $form_state['page_values'][1]['member_number'];
+$node-&gt;body['und'][0]['value'] = $body_text;
+$node-&gt;body['und'][0]['summary'] = '';
+$node-&gt;body['und'][0]['format'] = 'filtered_html';
+$node-&gt;body['und'][0]['safe_value'] = 'Lorem Ipsum Dolor';
+$node-&gt;field_member_number['und'][0]['value'] = $form_state['page_values'][1]['member_number'];
+$node-&gt;field_first_name['und'][0]['value'] = $form_state['page_values'][1]['first_name'];
+$node-&gt;field_middle_name['und'][0]['value'] = $form_state['page_values'][1]['middle_name'];
+$node-&gt;field_last_name['und'][0]['value'] = $form_state['page_values'][1]['last_name'];
+$node-&gt;field_date_of_birth['und'][0]['value'] = "2011-05-25T10:35:58";
+$node-&gt;field_date_of_event['und'][0]['value'] = $doe_data;
+$node-&gt;field_contact_number['und'][0]['value'] = $form_state['page_values'][1]['contact_number'];
+$node-&gt;field_email_address['und'][0]['value'] = $form_state['page_values'][1]['email'];
+$node-&gt;field_attend_with_a_partner['und'][0]['value'] = 1;
+$node = node_submit($node);
+node_save($node);
+
+drupal_set_message("Event created");
+</code></pre>
+
+<p>}</p>
+
+<p>function event_registration_form_page_two_back($form, &amp;$form_state)
+{
+    $form_state['values'] = $form_state['page_values'][1];
+    $form_state['page_num'] = 1;
+    $form_state['rebuild'] = TRUE;
+}</p>
+
+<p>function ajax_event_registration_form($form, &amp;$form_state)
+{
+    $form['city'] = array(
+        '#title' =&gt; t('Choose a city'),
+        '#type' =&gt; 'select',
+        '#options' =&gt; array(
+            'World' =&gt; t('World'),
+            'Chicago' =&gt; t('Chicago'),
+            'New York' =&gt; t('New York'),
+            'Los Angeles' =&gt; t('Los Angeles'),
+        ),
+        '#ajax' =&gt; array(
+            'callback' =&gt; 'ajax_event_registration_callback',
+            'wrapper' =&gt; 'ajax_event_registration_wrapper',
+        ),
+    );</p>
+
+<pre><code>$form['ajax_markup'] = array(
+    '#type' =&gt; 'markup',
+    '#prefix' =&gt; '&lt;div id="ajax_event_registration_wrapper"&gt;',
+    '#suffix' =&gt; '&lt;/div&gt;',
+);
+
+if( (isset($form_state['values']['city'])) &amp;&amp; ($form_state['values']['city'] != '') ) 
+{
+    $form['ajax_markup']['#markup'] = t('You choose '. $form_state['values']['city']);
+}
+
+return $form;
+</code></pre>
+
+<p>}</p>
+
+<p>function ajax_event_registration_callback($form, $form_state)
+{
+    return $form['ajax_markup'];
+}</p>
+
 <p>event_registration.inc</p>
 
 <p>&lt;?php</p>
