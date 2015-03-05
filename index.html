@@ -33,6 +33,47 @@
       <section id="main_content" class="inner">
         <p>Welcome to Drupal Learning Road Map</p>
 
+<p>Info files:</p>
+
+<p>; $Id $
+name = drupalform
+description = "Web Sign Review"
+package = "AVA"
+core = 7.x</p>
+
+<p>Module Creation Reminders:
+menu function:</p>
+
+<p>$items['drupalform2'] = array(
+'title' =&gt; t('Drupal Form2'),
+'page callback' =&gt; 'drupal_get_form',
+'page arguments' =&gt; array('drupalform2_form',1),
+'access callback'  =&gt; TRUE,
+'access arguments' =&gt; array('administer admin drupalform2 module'),
+'description' =&gt; t('Form for drupalform2'),
+'file' =&gt; 'drupalform2_signup.inc',
+'type' =&gt; MENU_NORMAL_ITEM,
+);</p>
+
+<p>permission function:</p>
+
+<p>return array(</p>
+
+<p>'administer admin drupalform2' =&gt; array(
+title' =&gt; t('Administer drupalform2 settings'),
+'description' =&gt; t('This is a custom admin permission for admin drupalform2'),</p>
+
+<p>),
+);</p>
+
+<p>form function code:</p>
+
+<p>function drupalform2_form($form,&amp;$form_state)
+{
+    drupal_set_title('Drupal Form 2');
+    return $form;
+}</p>
+
 <p>event_registration.module</p>
 
 <p>&lt;?php</p>
