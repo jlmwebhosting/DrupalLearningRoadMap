@@ -35,6 +35,53 @@
 
 <p><a href="http://www.techbootcamps.com/learn-more/curriculum">http://www.techbootcamps.com/learn-more/curriculum</a></p>
 
+<p><a href="http://ava.test.ava.com.au/ava_event/AVATEST3/create">http://ava.test.ava.com.au/ava_event/AVATEST3/create</a></p>
+
+<p><a href="http://www.imiscommunity.com/user_authentication">http://www.imiscommunity.com/user_authentication</a>
+<a href="https://www.wsdltophp.com/Wsdls/7939b78067358f8f976a28583a840dc3/iMIS-1-0-1-1-1-1-1-1-0-0">https://www.wsdltophp.com/Wsdls/7939b78067358f8f976a28583a840dc3/iMIS-1-0-1-1-1-1-1-1-0-0</a></p>
+
+<p>/*IMPORTANT NOTES:</p>
+
+<ul>
+<li>query path must be exact; no errors returned</li>
+<li>this example assumes the IQA as Read access for the Everyone group</li>
+<li>IQA must have permissions set correctly; at least read access</li>
+<li>IQA parameters need to be in double quotes, separated by a comma. Example: "abc","123"
+*/
+//Set parameters for service call
+$param = array ();
+//$param['queryPath'] = '$/ContactManagement/DefaultSystem/Queries/Advanced/Contact/IT/LastName';
+$param['queryPath'] = '$/ContactManagement/DefaultSystem/Queries/Directory/Contacts/Default';
+$param['parameters'] = '"sc","s"';
+//$/ContactManagement/DefaultSystem/Queries/Directory/Contacts/Default IQA can handle multiple parameters
+//this example only passes the first two (first two letters for last name and first letter for first name)</li>
+</ul>
+
+<p>$client = new SoapClient($baseURL."/AsiCommon/Services/query/queryservice.asmx?wsdl");
+$result = $client-&gt;GetResultsWithParameters($param);
+//print_r($result); //display raw results; is XML string
+echo "</p><pre>".htmlentities($result-&gt;GetResultsWithParametersResult)."</pre>\n";
+
+<p>$xml_string = $result-&gt;GetResultsWithParametersResult;
+$xml_string = "".$xml_string.""; //add start and end tags so it will load
+$xml = simplexml_load_string($xml_string,'SimpleXMLElement',LIBXML_NOBLANKS);</p>
+
+<p>echo "</p><pre>";
+print_r($xml);
+echo "</pre>\n";
+
+<p><a href="http://www.imiscommunity.com/error_geting_total_charges_for_an_event_with_ibo_12_2_2229">http://www.imiscommunity.com/error_geting_total_charges_for_an_event_with_ibo_12_2_2229</a></p>
+
+<p><a href="http://www.imiscommunity.com/the_issue_about_defining_custom_sp_to_registrant_class_determination">http://www.imiscommunity.com/the_issue_about_defining_custom_sp_to_registrant_class_determination</a>
+<a href="http://docs.imis.com/15.2.0/index.htm?turl=eventsoverview.htm">http://docs.imis.com/15.2.0/index.htm?turl=eventsoverview.htm</a></p>
+
+<p><a href="https://www.atsol.org/wcm/Products/Web_Services_Suite/wcm/products/Web_Services_Suite.aspx?hkey=d518f1de-b32f-4dcc-a2dd-07e9bd624429">https://www.atsol.org/wcm/Products/Web_Services_Suite/wcm/products/Web_Services_Suite.aspx?hkey=d518f1de-b32f-4dcc-a2dd-07e9bd624429</a>
+<a href="http://www.imiscommunity.com/soa_how_to_using_php_soap">http://www.imiscommunity.com/soa_how_to_using_php_soap</a>
+<a href="http://www.snip2code.com/Snippet/135850/Authentication-with-iMIS-and-iBridge">http://www.snip2code.com/Snippet/135850/Authentication-with-iMIS-and-iBridge</a>
+<a href="https://groups.drupal.org/imis">https://groups.drupal.org/imis</a>
+<a href="http://docs.imis.com/soa/">http://docs.imis.com/soa/</a>
+<a href="http://www.atsol.org/wcm/Products/iMIS_Bridges_and_Integrations/wcm/products/iMIS_Bridges_and_Integrations.aspx?hkey=88f0175c-fd4e-42e7-b391-622b65168c90">http://www.atsol.org/wcm/Products/iMIS_Bridges_and_Integrations/wcm/products/iMIS_Bridges_and_Integrations.aspx?hkey=88f0175c-fd4e-42e7-b391-622b65168c90</a></p>
+
 <p><a href="http://drupion.com/blog/10-steps-creating-ctools-modal-window-drupal-7">http://drupion.com/blog/10-steps-creating-ctools-modal-window-drupal-7</a>
 <a href="http://www.onextrapixel.com/2013/12/27/how-to-create-a-drupal-7-theme-from-scratch/">http://www.onextrapixel.com/2013/12/27/how-to-create-a-drupal-7-theme-from-scratch/</a>
 <a href="https://www.drupal.org/node/1010576">https://www.drupal.org/node/1010576</a>
